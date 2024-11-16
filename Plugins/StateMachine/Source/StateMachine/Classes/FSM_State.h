@@ -51,6 +51,35 @@ public:
 		FName Description;
 };
 
+/* We use EditInlineNew for branches because branches aren't that reusable.
+ so we don't want them sitting around as assets.
+ You can create branch assets if you want to but generally they don't have to be reused. 
+ Just because you used EditInlineNew doesn't mean an asset can't be created, they can. This just allows us to define this class here itself*/
+UCLASS(EditInlineNew)
+class STATEMACHINE_API UFSM_Branch : public UDataAsset
+{
+	GENERATED_BODY()
+public:
+	/* A branch tells us whether or not we reached the destination state
+	We want to know if it got to the destination state & what is the destination state.
+	Instead of using 2 variables for these we can just ask it to return the DestinationState if it succeeds & NULL if it fails
+	*/
+	// If you want to create a branch with multiple inputs you can set the OutDataIndex to use something other than 1
+	virtual UFSM_State* TryBranch(const UObject* refObject, const TArray<UFSM_InputAtom*>& DataSource,
+		int32 DataIndex, int32& OutDataIndex);
+protected:
+	// State where this branch will go next. If it's null the branch is ignored
+	UPROPERTY(EditAnywhere)
+		UFSM_State* DestinationState;
+	// If true, the meaning of AcceptableInputs is reversed
+	UPROPERTY(EditAnywhere)
+		uint32 bReverseInputTest : 1;
+	// Acceptable inputs. Current input atom must be on this list
+	UPROPERTY(EditAnywhere)
+		TArray<UFSM_InputAtom*> AcceptableInputs;
+};
+
+
 UCLASS()
 class STATEMACHINE_API UFSM_State : public UDataAsset
 {
