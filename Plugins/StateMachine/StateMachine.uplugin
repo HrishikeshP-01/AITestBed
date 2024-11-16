@@ -2,7 +2,7 @@
 	"FileVersion": 3,
 	"Version": 1,
 	"VersionName": "1.0",
-	"FriendlyName": "StateMachine",
+	"FriendlyName": "State Machine for games",
 	"Description": "Classes for a state machine",
 	"Category": "Other",
 	"CreatedBy": "Hrishikesh P",
@@ -10,6 +10,7 @@
 	"DocsURL": "",
 	"MarketplaceURL": "",
 	"SupportURL": "",
+	"EnabledByDefault":  true,
 	"CanContainContent": true,
 	"IsBetaVersion": false,
 	"IsExperimentalVersion": false,
@@ -18,6 +19,7 @@
 		{
 			"Name": "StateMachine",
 			"Type": "Runtime",
+			"_comment": "Developer there are different types of modules - Runtime will exist in shipping builds, Developer will only exist in developer builds. Remove this line in case of unforseen error. Idk if _comment is valid",
 			"LoadingPhase": "Default"
 		}
 	]
