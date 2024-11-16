@@ -50,7 +50,7 @@ public:
 };
 
 USTRUCT()
-struct FQuestInPorgress
+struct FQuestInProgress
 {
 	GENERATED_BODY()
 	// Quest data asset
