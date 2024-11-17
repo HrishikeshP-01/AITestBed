@@ -64,6 +64,7 @@ struct FQuestInProgress
 
 protected:
 	// All input for this quest which is obtained from master input list after filtering using whitelist/blacklist
+	UPROPERTY(EditAnywhere)
 	TArray<UFSM_InputAtom*> QuestActivities;
 
 public:
