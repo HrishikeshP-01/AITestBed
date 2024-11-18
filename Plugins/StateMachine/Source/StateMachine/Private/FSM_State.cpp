@@ -9,8 +9,11 @@ UFSM_State* UFSM_Branch::TryBranch(const UObject* refObject, const TArray<UFSM_I
 	int32 DataIndex, int32& OutDataIndex)
 {
 	OutDataIndex = DataIndex;
-	if (!AcceptableInputs.Num() // If acceptable inputs is not empty
-		|| DataSource.IsValidIndex(DataIndex) // If DataSource contains an element at the given data index
+	if (/* !AcceptableInputs.Num() 
+		 If acceptable inputs is empty then essentially any input is valid so it executes the logic 
+		 however to make any input valid we can just set the bReverseInputTest to true with an empty acceptable input list 
+		 so this condition doesn't have to be here */
+		DataSource.IsValidIndex(DataIndex) // If DataSource contains an element at the given data index
 		&& AcceptableInputs.Contains(DataSource[DataIndex]) // If input at that particular position is present in AcceptableInputs
 		)
 	{
@@ -18,6 +21,12 @@ UFSM_State* UFSM_Branch::TryBranch(const UObject* refObject, const TArray<UFSM_I
 		return (bReverseInputTest ? nullptr : DestinationState);
 	}
 
+	++OutDataIndex; 
+	/* Increment the OutDataIndex even if the condition is false bc anyways you are going to increment it as loop by default is true
+	* and you need to move to the next input in case bReverseInputTest is true & Destination state is returned 
+	* if you don;t increment it we are stuck with the same output 
+	
+	As ++OutDataIndex happens anyways we can optimize this by doing it at the beginning but I'm leaving it like this to understand the logic*/
 	return (bReverseInputTest ? DestinationState : nullptr);
 }
 
