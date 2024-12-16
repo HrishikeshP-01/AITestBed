@@ -8,7 +8,7 @@ public class AITestBed : ModuleRules
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 	
-		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "StateMachine" });
+		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "StateMachine", "GOAP" });
 
 		PrivateDependencyModuleNames.AddRange(new string[] {  });
 
