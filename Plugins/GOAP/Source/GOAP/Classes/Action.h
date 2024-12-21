@@ -11,12 +11,13 @@
  * 
  */
 UENUM(Blueprintable)
-enum class EActionCompletion :uint8
+enum class EActionStatus :uint8
 {
-	EAC_Invalid, // If the action becomes invalid 
-	EAC_InProgress,
-	EAC_Succeeded,
-	EAC_Failed
+	EAS_Invalid, // If the action becomes invalid 
+	EAS_InProgress,
+	EAS_Succeeded,
+	EAS_Failed,
+	EAS_OutOfSteps UMETA(Hidden)
 };
 
 
@@ -31,27 +32,27 @@ public:
 	UFUNCTION(BlueprintCallable)
 		// Fn that returns true if an action is valid
 		virtual bool IsValid();
-	UFUNCTION(BlueprintImplementableEvent)
+	UFUNCTION(BlueprintCallable)
+		virtual void Initialize(UBlackboardComponent* b);
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = Gameplay)
 		// Execute is an event so designers can access it via BP & use nodes like Delay
 		void Execute();
 
 	// Fn to find the next action to be taken. First valid action from the list will be executed
 	UAction* NextAction();
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		TArray<UAction*> OnSuccess; // List of actions to be taken upon success in decreasing order of priority
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		TArray<UAction*> OnFail; // List of actions to be taken upon failure in decreasing order of priority
-	UPROPERTY(EditAnywhere)
-		EActionCompletion actionCompletion; // Completion status of current action
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		EActionStatus actionStatus; // Completion status of current action
 
 	// Testing. Remove uneccesary code once done
-	UPROPERTY(EditAnywhere)
-		UBlackboardComponent* x;
-	UPROPERTY(EditAnywhere)
-		UBlackboardData* y;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		UBlackboardComponent* bbc;
 
 	// Debug
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		FText desc;
 };

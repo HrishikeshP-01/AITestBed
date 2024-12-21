@@ -37,6 +37,11 @@ int AGrid::GetTileIndex(int X, int Y)
 	return (Y * tile_X) + X;
 }
 
+int AGrid::GetTileIndexFromLocation(const FVector& location)
+{
+	return (FMath::Floor((location - GetActorLocation()).Y / Side) * tile_X) + FMath::Floor((location - GetActorLocation()).X / Side);
+}
+
 void AGrid::DrawGrid()
 {
 	UWorld* world = GetWorld();
@@ -135,3 +140,12 @@ void AGrid::AddNeighbor(TSet<int>& closedIndices, TArray<FVector>& open, int n, 
 	open.Add(FVector(n, tiles[n].cost + f_cost, parentIndex));
 	UE_LOG(LogTemp, Warning, TEXT("Grid Added neighbor: %d"), n);
 }
+
+void AGrid::VisualizePath(const TArray<FVector>& path, bool persist, float time, FColor color)
+{
+	for (int i = 0;i < path.Num() - 1;i++)
+	{
+		DrawDebugLine(GetWorld(), path[i], path[i + 1], color, persist, time);
+	}
+}
+

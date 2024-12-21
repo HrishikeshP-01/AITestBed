@@ -7,11 +7,11 @@ UDT_Action* UDT_Action::NextAction()
 {
 	switch (actionStatus)
 	{
-	case EActionStatus::AS_Success:
+	case EDTActionStatus::AS_Success:
 		return FindValidAction(OnSuccess);
-	case EActionStatus::AS_Fail:
+	case EDTActionStatus::AS_Fail:
 		return FindValidAction(OnFail);
-	case EActionStatus::AS_InProgress:
+	case EDTActionStatus::AS_InProgress:
 		return this;
 	}
 

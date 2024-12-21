@@ -60,6 +60,8 @@ public:
 		void GetGridIndex(const FVector& location, int& X, int& Y);
 	UFUNCTION(BlueprintCallable)
 		int GetTileIndex(int X, int Y);
+	UFUNCTION(BlueprintCallable)
+		int GetTileIndexFromLocation(const FVector& location);
 
 	// Debug
 	UFUNCTION(BlueprintCallable)
@@ -69,5 +71,7 @@ public:
 	UFUNCTION(BlueprintCallable)
 		void GetPath(const FVector& start, const FVector& end, TArray<FVector>& path);
 	void AddNeighbor(TSet<int>& closedIndices, TArray<FVector>& open, int n, int f_cost, int parentIndex);
+	UFUNCTION(BlueprintCallable)
+		void VisualizePath(const TArray<FVector>& path, bool persist, float time, FColor color);
 
 };

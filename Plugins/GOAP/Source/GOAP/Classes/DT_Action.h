@@ -11,7 +11,7 @@
  * 
  */
 UENUM(Blueprintable)
-enum class EActionStatus :uint8
+enum class EDTActionStatus :uint8
 {
 	AS_Invalid,
 	AS_InProgress,
@@ -30,7 +30,7 @@ public:
 		FText ActionDesc;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		EActionStatus actionStatus;
+		EDTActionStatus actionStatus;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		int maxStepCount;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)

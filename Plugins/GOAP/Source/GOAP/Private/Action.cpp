@@ -25,16 +25,21 @@ bool UAction::IsValid()
 	return false;
 }
 
+void UAction::Initialize(UBlackboardComponent* b)
+{
+	bbc = b;
+}
+
 UAction* UAction::NextAction()
 {
-	if (actionCompletion == EActionCompletion::EAC_Succeeded)
+	if (actionStatus == EActionStatus::EAS_Succeeded)
 	{
 		for (int i = 0; i < OnSuccess.Num();i++)
 		{
 			if (OnSuccess[i]->IsValid()) { return OnSuccess[i]; }
 		}
 	}
-	if (actionCompletion == EActionCompletion::EAC_Failed)
+	if (actionStatus == EActionStatus::EAS_Failed)
 	{
 		for (int i = 0;i < OnFail.Num();i++)
 		{
@@ -43,7 +48,7 @@ UAction* UAction::NextAction()
 	}
 	// If in progress return the current action.
 	// CONCERN: Will this cause the action to repeat?
-	if (actionCompletion == EActionCompletion::EAC_InProgress) { return this; }
+	if (actionStatus == EActionStatus::EAS_InProgress) { return this; }
 
 	// If invalid
 	return nullptr;
