@@ -10,6 +10,12 @@ void UMoveTo::Initialize(UBlackboardComponent* b)
 	grid = Cast<AGrid>(bbc->GetValueAsObject(FName("Grid")));
 }
 
+bool UMoveTo::IsValid()
+{
+	// return true for now, can't figure out what the false condition would be. No limbs?
+	return true;
+}
+
 FVector UMoveTo::MoveToPos(const FVector& currPos, const FVector& targetPos)
 {
 	// Check if already at destination

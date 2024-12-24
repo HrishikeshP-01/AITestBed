@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "BehaviorTree/BlackboardComponent.h"
 #include "BehaviorTree/BlackboardData.h"
+#include "WorldState.h"
 #include "Action.generated.h"
 
 /**
@@ -42,13 +43,15 @@ public:
 	UAction* NextAction();
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		EWorldState WS; // WS when executed
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		TArray<UAction*> OnSuccess; // List of actions to be taken upon success in decreasing order of priority
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		TArray<UAction*> OnFail; // List of actions to be taken upon failure in decreasing order of priority
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		EActionStatus actionStatus; // Completion status of current action
 
-	// Testing. Remove uneccesary code once done
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		UBlackboardComponent* bbc;
 

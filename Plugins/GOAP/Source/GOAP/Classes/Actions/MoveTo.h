@@ -20,6 +20,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		AGrid* grid;
 	virtual void Initialize(UBlackboardComponent* b) override;
+	virtual bool IsValid() override;
 	UFUNCTION(BlueprintCallable)
 		FVector MoveToPos(const FVector& currPos, const FVector& targetPos);
 };
