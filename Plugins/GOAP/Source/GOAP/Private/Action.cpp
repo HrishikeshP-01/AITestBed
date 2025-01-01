@@ -22,7 +22,7 @@ UWorld* UAction::GetWorld() const
 
 bool UAction::IsValid()
 {
-	return false;
+	return true;
 }
 
 void UAction::Initialize(UBlackboardComponent* b)

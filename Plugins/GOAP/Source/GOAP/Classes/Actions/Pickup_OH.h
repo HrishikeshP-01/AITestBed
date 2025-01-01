@@ -21,6 +21,8 @@ public:
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		AItem* item;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		float itemPickupRange = 100.0f;
 	/*void Execute()override;*/
 	
 };

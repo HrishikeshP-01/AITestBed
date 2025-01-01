@@ -15,6 +15,12 @@ bool UPickup_OH::IsValid()
 	// Check if the bot has hands
 	EHandStatus hs = static_cast<EHandStatus>(bbc->GetValueAsEnum(FName("HandStatus")));
 	if (hs == EHandStatus::NoHands) { return false; }
+
+	//// Do we need to Check if item is within range as we already do it in the move to fn
+	//AActor* bot = Cast<AActor>(bbc->GetValueAsObject(FName("SelfActor")));
+	//if (FVector::Distance(bot->GetActorLocation(), item->GetActorLocation()) > itemPickupRange) { return false; }
+	// It would be good to add debug messages here so we know exactly where each action, plan, goal fails
+	
 	// If item is being used by someone, you can't pick it up
 	if (item->isBeingUsed) { return false; }
 

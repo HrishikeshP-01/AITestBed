@@ -18,7 +18,11 @@ enum class EWorldState :uint8
 
 	// Item pick status
 	Item_Equipped,
-	Item_Unequipped
+	Item_Unequipped,
+
+	// Attack status
+	Attack_InProgress,
+	Attack_NotAttacking
 };
 
 UENUM(Blueprintable)

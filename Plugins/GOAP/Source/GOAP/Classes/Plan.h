@@ -11,6 +11,10 @@
 /**
  * 
  */
+
+DECLARE_DYNAMIC_DELEGATE_TwoParams(FPlanCompleteSignature, TSubclassOf<UPlan>, nextPlan, bool, planSucceeded);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FPlanCompletedSignature, TSubclassOf<UPlan>, nextPlan);
+
 UCLASS(Blueprintable)
 class GOAP_API UPlan : public UObject
 {
@@ -29,7 +33,16 @@ public:
 		TArray<UAction*> actionSpace;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		UBlackboardComponent* bbc;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+		int counter;
 
+	//UPROPERTY(BlueprintAssignable) only for multi-cast. Idt we need multi-cast delegate for plans
+	FPlanCompleteSignature PlanCompleteDelegate;
+	UPROPERTY(BlueprintAssignable)
+		FPlanCompletedSignature PlanCompletedDelegate;
+
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+		void InitializeSteps();
 	UFUNCTION(BlueprintCallable)
 		virtual void InitializePlan(UBlackboardComponent* b);
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = Gameplay)
@@ -38,4 +51,9 @@ public:
 		UAction* PickAction();
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = Gameplay)
 		void ExecuteStep();
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+		TSubclassOf<UPlan> ExitSteps();
+	// We no longer need exit plan to be an event. Just make it a fn. We are handling custom logic in exit steps fn anyways
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+		void ExitPlan();
 };

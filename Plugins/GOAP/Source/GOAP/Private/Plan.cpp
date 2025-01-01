@@ -30,22 +30,43 @@ void UPlan::InitializePlan(UBlackboardComponent* b)
 		actionSpace.Add(NewObject<UAction>(this, actionSpaceClasses[i]));
 		// actionSpace[i]->Initialize(bbc); Should we initialize actions here or evertime they're called? or at a later pt?
 	}
+
+	InitializeSteps();
 }
 
 UAction* UPlan::PickAction()
 {
-	for (int i = 0;i < desiredWS.Num();i++)
+	for (counter = 0;counter < desiredWS.Num();counter++)
 	{
-		if (desiredWS[i] == currWS[i]) { continue; }
+		if (desiredWS[counter] == currWS[counter]) { continue; }
 
 		// Current implementation assumes only 1 action from possible actions give a desired WS. It returns that action
 		// If needed modify it so that actions that return a desired WS are added to an array & then an action from the possiblity space is chosen
 		for (int j = 0;j < actionSpace.Num();j++)
 		{
-			if (actionSpace[j]->WS == desiredWS[i]) { return actionSpace[j]; }
+			if (actionSpace[j]->WS == desiredWS[counter]) { return actionSpace[j]; }
 		}
 		return nullptr;
 	}
 
 	return nullptr;
+}
+
+void UPlan::ExitPlan_Implementation()
+{
+	// At this point I'm not sure if I need to know the plan completion status so I'm not implementing logic for it. For now the delegate only returns the next plan if any
+	TSubclassOf<UPlan> nextPlan = ExitSteps();
+	PlanCompletedDelegate.Broadcast(nextPlan);
+
+	// PlanCompleteDelegate.Execute(nextPlan, false); non-multi cast delegate isn't blueprint assingable & throws a not bound error for some reason
+
+	//// if the desiredWS = currWS then the plan has succeeded
+	//if (counter >= desiredWS.Num())
+	//{
+	//	PlanCompleteDelegate.Execute(nullptr, true);
+	//}
+	//
+	//// if the counter isn't complete it says plan failed. Review
+	//PlanCompleteDelegate.Execute(nullptr, false);
+	
 }

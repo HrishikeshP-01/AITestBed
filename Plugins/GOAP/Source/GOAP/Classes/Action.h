@@ -30,11 +30,14 @@ class GOAP_API UAction : public UObject
 	virtual UWorld* GetWorld() const override;
 
 public:
+	// Make this a blueprint implementable event in future
 	UFUNCTION(BlueprintCallable)
 		// Fn that returns true if an action is valid
 		virtual bool IsValid();
 	UFUNCTION(BlueprintCallable)
 		virtual void Initialize(UBlackboardComponent* b);
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+		EWorldState CalculateCurrentWS();
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = Gameplay)
 		// Execute is an event so designers can access it via BP & use nodes like Delay
 		void Execute();
